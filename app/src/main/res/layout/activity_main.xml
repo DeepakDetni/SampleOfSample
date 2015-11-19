@@ -81,7 +81,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/password"/>
+                    android:src="@mipmap/password1"/>
             </LinearLayout>
             <LinearLayout
                 android:background="@drawable/edit_text"

@@ -1,40 +1,39 @@
 package com.app.sampleofsample.sampleofsample;
 
+import java.io.InputStream;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import java.io.InputStream;
+import com.app.sampleofsample.sampleofsample.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.content.IntentSender.SendIntentException;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.View;
-        import android.view.View.OnClickListener;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.RelativeLayout;
-        import android.widget.TextView;
-        import android.widget.Toast;
-
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.GooglePlayServicesUtil;
-        import com.google.android.gms.common.Scopes;
-        import com.google.android.gms.common.SignInButton;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-        import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-        import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.common.api.Status;
-        import com.google.android.gms.plus.Plus;
-        import com.google.android.gms.plus.model.people.Person;
-
-public class MainActivity extends Activity implements OnClickListener,
+public class SignUpWithGoogle extends Activity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener {
     String email;
     private static final int RC_SIGN_IN = 0;
@@ -67,9 +66,9 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sign_up_with_google);
 
-        signInWithGplus();
+        btnSignIn = (RelativeLayout) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
         confirmbutton = (Button) findViewById(R.id.confirmbutton);
@@ -91,11 +90,13 @@ public class MainActivity extends Activity implements OnClickListener,
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
 
                 .build();
+
     }
 
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        signInWithGplus();
     }
 
     protected void onStop() {
@@ -210,9 +211,7 @@ public class MainActivity extends Activity implements OnClickListener,
                 txtName.setText(personName);
                 txtEmail.setText(email);
 
-                // by default the profile url gives 50x50 px image only
-                // we can replace the value with whatever dimension we want by
-                // replacing sz=X
+
                 personPhotoUrl = personPhotoUrl.substring(0,
                         personPhotoUrl.length() - 2)
                         + PROFILE_PIC_SIZE;
@@ -237,7 +236,7 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sign_up_with_google_activty, menu);
+        getMenuInflater().inflate(R.menu.menu_sign_up_with_google, menu);
         return true;
     }
 
@@ -247,9 +246,10 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-
-
+            case R.id.btn_sign_in:
+                // Signin button clicked
+                signInWithGplus();
+                break;
             case R.id.btn_sign_out:
                 // Signout button clicked
                 signOutFromGplus();
@@ -266,7 +266,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     private void confirmmail() {
-//        Intent i = new Intent(MainActivity.this,ConfirmationMailSendingActivity.class);
+//        Intent i = new Intent(MainActivity.this,Si.class);
 //        i.putExtra("email",email);
 //        startActivity(i);
     }
