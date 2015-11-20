@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void signOutFromGplus() {
+        if (mGoogleApiClient.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-        
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
-//            updateUI(false);
+        }
         
     }
 
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         protected void onPostExecute(Bitmap result) {
             profileimagebitmap=result;
-            
+
         }
     }
 

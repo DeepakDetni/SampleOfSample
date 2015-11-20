@@ -26,9 +26,9 @@ public class UserProfileActivity extends ActionBarActivity {
     String personGooglePlusProfile;
     MainActivity mainActivity;
 
-    Button btnSignOut, btnRevokeAccess, confirmbutton;
+    Button SignoutGromGoogle, RevokeAcessFromGoogle, confirmbutton;
     ImageView imgProfilePic;
-    TextView txtName, txtEmail;
+    TextView username, useremail;
     LinearLayout llProfileLayout;
 
     @Override
@@ -36,12 +36,12 @@ public class UserProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
 
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+        SignoutGromGoogle = (Button) findViewById(R.id.btn_sign_out);
+        RevokeAcessFromGoogle = (Button) findViewById(R.id.btn_revoke_access);
         confirmbutton = (Button) findViewById(R.id.confirmbutton);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
+        username = (TextView) findViewById(R.id.txtName);
+        useremail = (TextView) findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
         Intent i = getIntent();
         email = i.getStringExtra("email");
@@ -51,15 +51,13 @@ public class UserProfileActivity extends ActionBarActivity {
 
           mainActivity = new MainActivity();
         new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
-        txtName.setText(personName);
-        txtEmail.setText(email);
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
+        username.setText(personName);
+        useremail.setText(email);
+        SignoutGromGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Plus.AccountApi.clearDefaultAccount(mainActivity.mGoogleApiClient);
-                Plus.AccountApi.revokeAccessAndDisconnect(mainActivity.mGoogleApiClient);
-                mainActivity.mGoogleApiClient.disconnect();
-                mainActivity.mGoogleApiClient.connect();
+
+                mainActivity.signOutFromGplus();
             }
         });
     }
